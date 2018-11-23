@@ -1,6 +1,12 @@
 import React from 'react'
 import {Row,Col} from 'antd'
 class Wfb extends React.Component{
+    constructor(props){
+        super(props)
+        this.state={
+            tabStatus:'transaction'
+        }
+    }
     render(){
         return (
             <div className='wfb-container'>
@@ -53,8 +59,12 @@ class Wfb extends React.Component{
                 <div className="wfb-bottom boxShadow">
                     <div className='left'>
                         <div className="tab">
-                            <div className="title tab1">交易信息<span></span></div>
-                            <div className="title tab2">申报信息</div>
+                            <div className={this.state.tabStatus=='transaction'?"active title tab1":"title tab1"}
+                                 onClick={()=>{this.setState({tabStatus:'transaction'})}}
+                            >交易信息<span></span></div>
+                            <div className={this.state.tabStatus=='declare'?"active title tab1":"title tab1"}
+                                 onClick={()=>{this.setState({tabStatus:'declare'})}}
+                            >申报信息</div>
                         </div>
                         <div className="search">
                             <input type="text" placeholder='请输入企业(服务商)名称查询'/>
@@ -163,6 +173,7 @@ class Wfb extends React.Component{
                     <div className='right'>
                         <div className="title">交易信息</div>
                         <table>
+                            <tbody>
                             <tr>
                                 <th>购买商品名称：企业法律培训</th>
                                 <th></th>
@@ -180,7 +191,7 @@ class Wfb extends React.Component{
                                 <td>注册电话：13880966893</td>
                             </tr>
                             <tr>
-                                <td>星级：</td>
+                                <td>星级：<i></i><i></i><i></i><i></i><i></i></td>
                                 <td>信用券申领时间：2018-07-01 10:17:26</td>
                                 <td>创新信用券状态：已使用</td>
                             </tr>
@@ -191,7 +202,7 @@ class Wfb extends React.Component{
                                 <td>注册电话：13880966893</td>
                             </tr>
                             <tr>
-                                <td>星级：</td>
+                                <td>星级：<i></i><i></i><i></i><i></i><i></i></td>
                                 <td>信用券兑现时间：2018-07-01 10:17:26</td>
                                 <td>创新信用券状态：已兑现</td>
                             </tr>
@@ -206,6 +217,7 @@ class Wfb extends React.Component{
                                 <td>审核时间：2018-07-01 10:17:26</td>
                                 <td>审核是否通过：是</td>
                             </tr>
+                            </tbody>
                         </table>
                     </div>
                 </div>
