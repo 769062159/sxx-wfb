@@ -144,7 +144,7 @@ export default class TablesChart extends  React.Component{
   }
   render(){
     return(
-       <div id="tables" className='tables' style={{height: '235px'}}></div>
+       <div id="tables" className='tables' style={{height: '275px',marginTop:'-40px'}}></div>
     )
   }
 }

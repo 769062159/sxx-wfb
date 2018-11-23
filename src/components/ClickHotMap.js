@@ -414,7 +414,7 @@ export default class ClickMap extends  React.Component{
     let {state} = this.props;
     return(
 
-          <div id="mainMap" style={{width:"100%",height:"100%",overflow:"hidden"}} className='hotmap' >
+          <div id="mainMap" style={{width:"100%",height:"100%",overflow:"hidden",minWidth:"925px"}} className='hotmap' >
 
               <img src={require("../assets/images/map-fh.svg")} style={{width:"100%",height:"100%"}} useMap="#fh"/>
 
