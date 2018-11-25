@@ -138,12 +138,15 @@
           flex-wrap: nowrap;
           &>span{
             border-right: 1px solid #fff;
-            height: 310px;
+            //height: calc(100vh);
             width: 1px;
           }
           ul{
             li{
               position: relative;
+              padding-right: 20px;
+              box-sizing: border-box;
+              cursor: pointer;
               padding-left: 20px;
               height: 35px;
               line-height: 35px;
@@ -152,6 +155,9 @@
               display: flex;
               flex-wrap: nowrap;
               white-space: nowrap;
+              .color{
+                background-color: #df0202;
+              }
               &>i{
                 width: 30px;
                 margin: 7px 0;
@@ -185,18 +191,21 @@
       padding: 40px 20px;
       box-sizing: border-box;
       .list-box{
+        .list1{
+          margin-bottom: 40px!important;
+        }
         .list{
           margin-bottom: 20px;
           .title{
             color: #00FEFB;
-            font-size: 16px;
-            line-height: 16px;
+            font-size: 20px;
+            line-height: 20px;
             margin-bottom: 15px;
           }
           .text{
             white-space: nowrap;
-            font-size: 14px;
-            line-height: 14px;
+            font-size: 16px;
+            line-height: 16px;
             margin-bottom: 10px;
             color: #fff;
           }
@@ -210,16 +219,22 @@
         color: #fff;
         margin-top: 20px;
         tr{
-          font-size: 16px;
+          font-size: 20px;
           height: 40px;
-          th{font-size: 16px;}
+          th{font-size: 18px;}
           td{
-            font-size: 16px;
+            font-size: 18px;
             line-height: 40px;
             white-space: nowrap;
             position: relative;
+            &>a{
+              color: #00FFFC;
+              text-decoration: underline;
+              font-size: 30px;
+            }
             &>span{
               color: #F6FF00;
+              font-size: 24px;
             }
             &>i{
               display: block;

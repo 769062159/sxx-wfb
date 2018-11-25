@@ -11,8 +11,8 @@ export default ()=>(
         <TabBar />
         <Switch>
             <Route path='/' exact component={()=>(<Redirect to='/datas'/>)}></Route>
-            <Route path='/datas' component={Dashbord}></Route>
-            <Route path='/wfb' component={Wfb}></Route>
+            <Route path='/datas' component={ Dashbord }></Route>
+            <Route path='/wfb' component={ Wfb }></Route>
             <Route path='/innovation' component={Home}></Route>
         </Switch>
         {/*<Footer />*/}
