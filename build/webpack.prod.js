@@ -30,7 +30,22 @@ module.exports = merge(baseConfig, {
                 test:/\.less$/,
                 use:ExtractTextPlugin.extract({
                     fallback:'style-loader',
-                    use:['css-loader','postcss-loader','less-loader']
+                    use:['css-loader',{
+                        loader: 'postcss-loader',
+                        options: {
+                            importLoaders: 1,
+                            sourceMap: true,
+                            config: {
+                                path: 'postcss.config.js'
+                            }
+                        }
+                    },{
+                        loader: 'less-loader',
+                        options: {
+                            importLoaders: 1,
+                            sourceMap: true
+                        }
+                    }]
                 })
             },
             {
@@ -44,6 +59,6 @@ module.exports = merge(baseConfig, {
     },
     plugins:[
         new UglifyJsPlugin(),
-        new ExtractTextPlugin("styles.css")
+        new ExtractTextPlugin("[hash:4].styles.css")
     ]
 });

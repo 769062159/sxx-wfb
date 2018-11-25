@@ -13,7 +13,6 @@ export default class InfoList extends Component{
     render(){
         return (
             <Fragment>
-
                 <div className='middle'>
                     <span></span>
                     {this.props.type=='declare'?

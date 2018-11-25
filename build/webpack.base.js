@@ -5,7 +5,7 @@ module.exports = {
     entry: ['babel-polyfill','./src/index.js'],
 
     output: {
-        filename: 'bundle.js',
+        filename: '[name].[chunkHash:5].js',
         path: path.resolve(__dirname, '../dist')
     },
     module:{

@@ -21,8 +21,10 @@
         flex-wrap: nowrap;
         height: 162px;
         font-size: 19px;
+        overflow: hidden;
         div>span:nth-child(2){
           margin: 0 10px;
+          white-space: nowrap;
         }
         img{
           margin-top: 6px;
@@ -54,10 +56,22 @@
       height:134px;
       display: flex;
       flex-wrap: nowrap;
+      overflow: hidden;
       .l3{
         display: flex;
         flex-wrap: nowrap;
         color: #fff;
+      }
+      .item3-box{
+        .number{
+          font-family: DIGIT;
+          font-size:43px;
+        }
+        .text{
+          margin-top:-10px;
+          margin-left:0;
+          white-space: nowrap;
+        }
       }
     }
     .item4{
@@ -90,10 +104,13 @@
       width: 100%;
       min-width: 480px;
       margin:10px 0;
-      padding: 10px;
+      padding: 15px;
+      box-sizing: border-box;
+      height: 164px;
       padding-bottom: 0;
       ul{
         display: flex;
+        flex-wrap: nowrap;
         li{
           color:#00EAFF;
           text-align: center;

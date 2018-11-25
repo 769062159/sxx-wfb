@@ -17,7 +17,7 @@ module.exports = merge(baseConfig, {
     module:{
         rules:[
             {
-                test: /\.css$/,
+                test: /\.css()$/,
                 use: [
                     'style-loader',
                     {
@@ -33,11 +33,17 @@ module.exports = merge(baseConfig, {
             },
             {
                 test:/\.less$/,
-                use:['style-loader','css-loader','postcss-loader','less-loader']
+                use:['style-loader','css-loader',{
+                    loader: 'postcss-loader',
+                    options: { importLoaders: 1 }
+                },'less-loader']
             },
             {
                 test:/\.(scss|sass)$/,
-                use:['style-loader','css-loader','postcss-loader','sass-loader']
+                use:['style-loader','css-loader',{
+                    loader: 'postcss-loader',
+                    options: { importLoaders: 1 }
+                },'sass-loader']
             }
         ]
     }

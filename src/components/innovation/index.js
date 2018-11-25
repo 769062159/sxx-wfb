@@ -225,16 +225,16 @@ class Home extends Component{
                                     <div style={{marginTop:"-15px", fontSize:"23px"}}>企业总数</div>
                                 </div>
                                 <div style={{marginLeft:"-10px"}}>
-                                    <ol stye={{width:"100%"}}>
+                                    <ol style={{width:"100%"}}>
                                         {this.getFinnacingInfos().map((val,index)=>{
-                                            return <li key={index} style={{listStyle:"none",textAlign:"right"}}>
-                                                <span style={{color:"#FFF", fontSize:"23px", }}>{val.tag}</span>
+                                            return <li key={index} style={{listStyle:"none",textAlign:"left"}}>
+                                                <span className='' style={{color:"#FFF", fontSize:"23px",whiteSpace:'nowrap' }}>{val.tag}</span>
                                             </li>
                                         })}
                                     </ol>
                                 </div>
                                 <div>
-                                    <ol stye={{width:"100%"}}>
+                                    <ol style={{width:"100%"}}>
                                         {this.getFinnacingInfos().map((val,index)=>{
                                             return <li key={index} style={{listStyle:"none"}}>
                                                 <span style={{color:"#8DFF00",fontSize:"32px", fontFamily:"DIGIT", marginLeft:"-10px"}}>{val.data}</span>

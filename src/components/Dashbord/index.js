@@ -314,23 +314,23 @@ class Dashbord extends React.Component {
                         <div  className='boxShadow item3'>
                             <div className='l3'>
                                 <img alt="" src={require("../../assets/images/t1.svg")}  />
-                                <div style={{marginLeft:"0", textAlign: 'left'}}>
-                                    <div style={{fontFamily: "DIGIT",fontSize:"43px"}}><AnimateComponent value={15}/></div>
-                                    <div style={{marginTop:"-10px",marginLeft:"0"}}>区块链节点数量</div>
+                                <div className='item3-box'>
+                                    <div className='number'><AnimateComponent value={15}/></div>
+                                    <div className='text'>区块链节点数量</div>
                                 </div>
                             </div>
                             <div className='l3' style={{margin:"0 0 0 15px"}}>
                                 <img alt="" src={require("../../assets/images/btc_orange.svg")}  />
-                                <div style={{marginLeft:"0", textAlign: 'left'}}>
-                                    <div style={{fontFamily: "DIGIT",fontSize:"43px"}}><AnimateComponent value={this.props.bct}/></div>
-                                    <div style={{marginTop:"-10px",marginLeft:"0"}}>区块链高度</div>
+                                <div  className='item3-box'>
+                                    <div className='number'><AnimateComponent value={this.props.bct}/></div>
+                                    <div className='text'>区块链高度</div>
                                 </div>
                             </div>
                         </div>
                         <div style={{width:"100%",margin:"10px 0 0 0"}}>
                             <ContainerBox {...DataSourceTwo}  leftText="交易趋势">
                                 <div className="containerA">
-                                    <ZxT width={"90%"} height={"270px"} margin={"0 0 5px 25px"}/>
+                                    <ZxT width={"90%"} overflow={'hidden'} height={"270px"} margin={"0 0 5px 25px"}/>
                                 </div>
                             </ContainerBox>
                         </div>
@@ -340,7 +340,7 @@ class Dashbord extends React.Component {
                     <div className='Float'>
                         <div className='item4'>
                             <div style={{height:"608px"}}><WorldMap {...WorldMapDates}/></div>
-                            <div  style={{margin:"10px 0 0 0"}}>
+                            <div  style={{overflow:'hidden'}}>
                                 <ContainerBox {...DataSourceOne}>
                                     <PupleTable {...PupSourceOne}/>
                                 </ContainerBox>
@@ -381,7 +381,7 @@ class Dashbord extends React.Component {
                             </ul>
                         </div>
 
-                        <div className='boxShadow FourS' style={{padding:"15px",height: "164px"}}>
+                        <div className='boxShadow FourS'>
                             <div style={{padding:"0 0 10px 5px",color: '#fff'}}>创新信用券服务商</div>
                             <ul>
                                 <li>
