@@ -87,7 +87,7 @@ class Home extends Component{
         const DataSourceOne={
             BoxStyle:{
                 width:"auto",
-                height:"170px",
+                height:"170px"
             },
             leftText: "孵化载体信息",
             showRight:false,

@@ -2,6 +2,7 @@ import React,{Component} from 'react'
 import {connect} from 'react-redux'
 import PinyinMatch from '../../utils/pinyinindex'
 import InfoList from "./infoList";
+import AnimateComponent from "../AnimateComponent";
 class Wfb extends Component{
     constructor(props){
         super(props)
@@ -92,21 +93,10 @@ class Wfb extends Component{
                     <div className="list">
                         <div className="box">
                             <div className="text">
-                                交易次数：<span>100</span>
+                                交易次数：<span><AnimateComponent value={100}/></span>
                             </div>
                             <div className="text">
-                                交易金额：<span>100<i>￥</i></span>
-                            </div>
-                        </div>
-                        <span></span>
-                    </div>
-                    <div className="list">
-                        <div className="box">
-                            <div className="text">
-                                申请兑换次数：<span>100</span>
-                            </div>
-                            <div className="text">
-                                申请兑换金额：<span>100<i>￥</i></span>
+                                交易金额：<span><AnimateComponent value={10000}/><i>￥</i></span>
                             </div>
                         </div>
                         <span></span>
@@ -114,10 +104,10 @@ class Wfb extends Component{
                     <div className="list">
                         <div className="box">
                             <div className="text">
-                                兑换次数：<span>100</span>
+                                申请兑换次数：<span><AnimateComponent value={5}/></span>
                             </div>
                             <div className="text">
-                                兑换金额：<span>100<i>￥</i></span>
+                                申请兑换金额：<span><AnimateComponent value={10000}/><i>￥</i></span>
                             </div>
                         </div>
                         <span></span>
@@ -125,10 +115,21 @@ class Wfb extends Component{
                     <div className="list">
                         <div className="box">
                             <div className="text">
-                                最大单笔交易金额：<span>100</span>
+                                兑换次数：<span><AnimateComponent value={25}/></span>
                             </div>
                             <div className="text">
-                                最小单笔交易金额：<span>100<i>￥</i></span>
+                                兑换金额：<span><AnimateComponent value={350000}/><i>￥</i></span>
+                            </div>
+                        </div>
+                        <span></span>
+                    </div>
+                    <div className="list">
+                        <div className="box">
+                            <div className="text">
+                                最大单笔交易金额：<span><AnimateComponent value={2500}/></span>
+                            </div>
+                            <div className="text">
+                                最小单笔交易金额：<span><AnimateComponent value={100}/><i>￥</i></span>
                             </div>
                         </div>
                     </div>
