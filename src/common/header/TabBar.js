@@ -35,7 +35,7 @@ componentDidMount(){
       },{
             key:"wfb",
             path:"/wfb",
-            content:"微腐败监管"
+            content:"交易信息"
         },
 
   ];

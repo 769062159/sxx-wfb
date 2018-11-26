@@ -1,3 +1,60 @@
+@media (max-width: 1500px) {
+  .wfb-container{
+    .wfb-top{
+      .list{
+        .text{
+          font-size: 22px!important;
+          transition: all 500ms;
+        }
+        span{
+          font-size: 38px!important;
+          color: #00FEFB;
+          i{
+            font-size: 22px;
+          }
+        }
+      }
+    }
+  }
+  .right{
+    &>table{
+      width: 100%;
+      color: #fff;
+      margin-top: 20px;
+      tr{
+        font-size: 20px;
+        height: 40px;
+        th{font-size: 16px;}
+        td{
+          font-size: 16px!important;
+          padding: 0 5px;
+          box-sizing: border-box;
+          &>a{
+            font-size: 18px!important;
+          }
+          &>span{
+            font-size: 20px!important;
+          }
+          &>i{
+            display: block;
+            background: url("../../assets/images/img.png") no-repeat;
+            height:20px;width:20px;background-position: 0 -20px;
+            display: inline-block;
+            margin-right: 5px;
+          }
+        }
+      }
+    }
+    .title{
+      height: 50px;
+      line-height: 50px;
+      font-size: 20px;
+      color: #fff;
+      text-align: center;
+      border-bottom: 1px solid #1890ff;
+    }
+  }
+}
 .wfb-container{
   padding: 20px 30px;
   box-sizing: border-box;
@@ -11,7 +68,8 @@
     .list{
       height: 180px;
       position: relative;
-      min-width: 420px;
+      flex: 1;
+      min-width: 300px;
       .box{
         position: absolute;
         top: 50%;
@@ -25,11 +83,14 @@
           display: flex;
           flex-wrap: nowrap;
           margin-bottom: 30px;
+          white-space: nowrap;
+          transition: all 500ms;
           span{
             font-size: 45px;
             color: #00FEFB;
             display: flex;
             flex-wrap: nowrap;
+            transition: all 500ms;
             i{
               font-size: 22px;
             }
@@ -74,7 +135,7 @@
         display: flex;
         flex-wrap: nowrap;
         border-bottom: 1px solid #1890ff;
-        margin-bottom: 30px;
+        margin-bottom: 20px;
         ::-webkit-input-placeholder { /* WebKit browsers */
           color:    #fff;
         }
@@ -88,8 +149,8 @@
           color:    #fff;
         }
         &>input{
-          height: 40px;
-          line-height: 40px;
+          height: 50px;
+          line-height: 50px;
           flex: 7;
           background-color: inherit;
           font-size: 16px;
@@ -192,6 +253,9 @@
       flex-wrap: nowrap;
       padding: 40px 20px;
       box-sizing: border-box;
+      min-width: 280px;
+      max-width: 280px;
+      width: 280px;
       .list-box{
         .list1{
           margin-bottom: 40px!important;
@@ -224,20 +288,23 @@
         tr{
           font-size: 20px;
           height: 40px;
-          th{font-size: 18px;}
+          th{font-size: 18px;transition: all 500ms;}
           td{
             font-size: 18px;
             line-height: 40px;
             white-space: nowrap;
             position: relative;
+            transition: all 500ms;
             &>a{
               color: #00FFFC;
               text-decoration: underline;
               font-size: 20px;
+              transition: all 500ms;
             }
             &>span{
               color: #F6FF00;
               font-size: 24px;
+              transition: all 500ms;
             }
             &>i{
               display: block;

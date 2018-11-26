@@ -24,7 +24,7 @@ class Wfb extends Component{
     }
 
     selectCompany=(e,type)=>{
-        let {transactionInfoBox,transactionSearchList,declareInfoBox,declareSearchList}=this.state
+        let {transactionSearchList,declareSearchList}=this.state
         let keyword = e.target.value.replace(/\s+/g, '').toUpperCase().toString()
         if(type==='transaction'){
             //每次输入先清空暂存搜索列表
@@ -41,7 +41,6 @@ class Wfb extends Component{
                 }
             })
             this.setState({transactionInfoBox:transactionSearchList})
-
         }else{
             declareSearchList.enterprise.length=0
             declareSearchList.service.length=0
@@ -138,10 +137,10 @@ class Wfb extends Component{
                 <div className="wfb-bottom boxShadow">
                     <div className='left'>
                         <div className="tab">
-                            <div className={tabStatus=='transaction'?"active title tab1 boxShadow":"title tab1"}
+                            <div className={tabStatus=='transaction'?"active title tab1":"title tab1"}
                                  onClick={()=>{this.handleSearchList('transaction')}}
                             >交易信息<span></span></div>
-                            <div className={tabStatus=='declare'?"active title tab1 boxShadow":"title tab1"}
+                            <div className={tabStatus=='declare'?"active title tab1 ":"title tab1"}
                                  onClick={()=>{this.handleSearchList('declare')}}
                             >申报信息</div>
                         </div>
