@@ -3,6 +3,8 @@ import {connect} from 'react-redux'
 import PinyinMatch from '../../utils/pinyinindex'
 import InfoList from "./infoList";
 import AnimateComponent from "../AnimateComponent";
+import Popup from '../popup'
+import zhengshu from '../../assets/images/zhengshu.png'
 class Wfb extends Component{
     constructor(props){
         super(props)
@@ -82,6 +84,7 @@ class Wfb extends Component{
 
     handleSelectId=(id)=>{
         this.setState({idBox:id})
+        this.openPopup.handleOpenPopup()
     }
 
     render(){
@@ -135,6 +138,36 @@ class Wfb extends Component{
                 </div>
 
                 <div className="wfb-bottom boxShadow">
+                    <Popup className='popup-container'
+                       style={{
+                            width: '820px',
+                            height: '360px',
+                            marginLeft: '-410px',
+                            marginTop: '-180px'
+                       }}
+                           ref={openPopup=>this.openPopup=openPopup}
+                    >
+                        <div className="box">
+                            <div className="title">星级预警信息</div>
+                            <div className="box-style">
+                                <div className="box-left">
+                                    <img src={zhengshu} alt=""/>
+                                    <div className="star">
+                                        <i></i><i></i><i></i><i></i><i className='star-style'></i>
+                                    </div>
+                                    <span></span>
+                                </div>
+                                <div className="box-right">
+                                    <div className="text">企业注册名称：成都香菇年文化传播有限公司</div>
+                                    <div className="text">企业注册时间：2017-10-17 10:25:27</div>
+                                    <div className="text">企业评星时间：2017-10-17 10:25:50</div>
+                                    <div className="text">星级修改时间：2017-12-19 10:25:27</div>
+                                    <div className="text">星级修改账号：zhangqi1983</div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </Popup>
                     <div className='left'>
                         <div className="tab">
                             <div className={tabStatus=='transaction'?"active title tab1":"title tab1"}
@@ -160,7 +193,9 @@ class Wfb extends Component{
                                     <ul>
                                         {transactionInfoBox.enterprise.map((item,index)=>{
                                             return (
-                                                <li key={index} className={item.id==this.state.idBox?'boxShadow':null} onClick={()=>{this.handleSelectId(item.id)}}>
+                                                <li key={index}
+                                                    className={item.id==this.state.idBox?'boxShadow':null}
+                                                    onClick={()=>{this.handleSelectId(item.id)}}>
                                                     <span></span><i className={item.star>3?'color':null}>{item.star}星</i>
                                                     {item.company}
                                                 </li>
