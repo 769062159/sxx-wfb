@@ -12,6 +12,9 @@ export const getCompanyInfoList=()=>{
             if(res.data.code===10000){
                 dispatch(getLeftList(res.data.companyAndProviderVo))
             }
+        }).catch(err=>{
+            console.log(err)
+            dispatch(getLeftList({}))
         })
     }
 }

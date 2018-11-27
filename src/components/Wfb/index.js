@@ -33,7 +33,6 @@ class Wfb extends Component{
 
     componentDidMount(){
         this.props.getCompanyList()
-        console.log(this.props)
     }
 
     selectCompany=(e,type)=>{
@@ -273,7 +272,8 @@ class Wfb extends Component{
 
 const mapStateToProps=(state)=>({
     transactionInfo: state.wfb.transactionInfo,
-    declareInfo: state.wfb.declareInfo
+    declareInfo: state.wfb.declareInfo,
+    info:state.wfb.info
 })
 
 const mapDispatchToProps=(dispatch)=>({
