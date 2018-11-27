@@ -6,10 +6,12 @@ const getLeftList=(result)=>({
     result
 })
 
-export const getMenuLeftList=()=>{
+export const getCompanyInfoList=()=>{
     return (dispatch)=>{
-        axios.get(Api.GET_MENU_LIST).then(res=>{
-            dispatch(getLeftList(res.data))
+        axios.get(Api.GET_FIND_ALL).then(res=>{
+            if(res.data.code===10000){
+                dispatch(getLeftList(res.data.companyAndProviderVo))
+            }
         })
     }
 }

@@ -1,9 +1,11 @@
 import React,{Component} from 'react'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import PinyinMatch from '../../utils/pinyinindex'
 import InfoList from "./infoList";
 import AnimateComponent from "../AnimateComponent";
 import Popup from '../popup'
+import * as actionCreators from "./store/actionCreators";
+
 import zhengshu from '../../assets/images/zhengshu.png'
 class Wfb extends Component{
     constructor(props){
@@ -23,6 +25,15 @@ class Wfb extends Component{
                 service:[]
             },//筛选结果
         }
+    }
+
+    componentWillMount(){
+
+    }
+
+    componentDidMount(){
+        this.props.getCompanyList()
+        console.log(this.props)
     }
 
     selectCompany=(e,type)=>{
@@ -82,9 +93,11 @@ class Wfb extends Component{
         }
     }
 
-    handleSelectId=(id)=>{
-        this.setState({idBox:id})
-        this.openPopup.handleOpenPopup()
+    handleSelectId=(item)=>{
+        this.setState({idBox:item.id})
+        if(item.star>3){
+            this.openPopup.handleOpenPopup()
+        }
     }
 
     render(){
@@ -165,7 +178,6 @@ class Wfb extends Component{
                                     <div className="text">星级修改账号：zhangqi1983</div>
                                 </div>
                             </div>
-
                         </div>
                     </Popup>
                     <div className='left'>
@@ -191,30 +203,30 @@ class Wfb extends Component{
                                 <div className="box-list">
                                     <span></span>
                                     <ul>
-                                        {transactionInfoBox.enterprise.map((item,index)=>{
+                                        {transactionInfoBox.enterprise?transactionInfoBox.enterprise.map((item,index)=>{
                                             return (
                                                 <li key={index}
-                                                    className={item.id==this.state.idBox?'boxShadow':null}
-                                                    onClick={()=>{this.handleSelectId(item.id)}}>
+                                                    className={item.id===this.state.idBox?'boxShadow':null}
+                                                    onClick={()=>{this.handleSelectId(item)}}>
                                                     <span></span><i className={item.star>3?'color':null}>{item.star}星</i>
                                                     {item.company}
                                                 </li>
                                             )
-                                        })}
+                                        }):null}
                                     </ul>
                                 </div>
                                 <div className="title">服务商</div>
                                 <div className="box-list">
                                     <span></span>
                                     <ul>
-                                        {transactionInfoBox.service.map((item,index)=>{
+                                        {transactionInfoBox.service?transactionInfoBox.service.map((item,index)=>{
                                             return (
                                                 <li key={index}>
                                                     <span></span><i className={item.star>3?'color':null}>{item.star}星</i>
                                                     {item.company}
                                                 </li>
                                             )
-                                        })}
+                                        }):null}
                                     </ul>
                                 </div>
                             </div>
@@ -264,4 +276,10 @@ const mapStateToProps=(state)=>({
     declareInfo: state.wfb.declareInfo
 })
 
-export default connect(mapStateToProps,null)(Wfb)
+const mapDispatchToProps=(dispatch)=>({
+    getCompanyList(){
+        dispatch(actionCreators.getCompanyInfoList())
+    }
+})
+
+export default connect(mapStateToProps,mapDispatchToProps)(Wfb)

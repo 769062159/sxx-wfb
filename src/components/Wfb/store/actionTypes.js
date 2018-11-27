@@ -1,1 +1,1 @@
-export const GET_MENU_LIST='home/GET_MENU_LIST'
+export const GET_MENU_LIST='wfb/GET_FIND_ALL'
