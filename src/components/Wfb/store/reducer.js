@@ -1,6 +1,7 @@
 import * as actionTypes from './actionTypes'
 
 const defaultState={
+    productInfo:{},
     transactionInfo:{
         company:[],
         productProvider:[]
@@ -72,6 +73,16 @@ export default (state = defaultState, action)=>{
             return {
                 ...state,
                 transactionInfo: action.result
+            }
+        case actionTypes.GET_PRODUCT_LIST:
+            return {
+                ...state,
+                productInfo:action.result
+            }
+        case actionTypes.GET_TRADE_LIST:
+            return {
+                ...state,
+                tradeInfo:action.result
             }
         default:
             return state

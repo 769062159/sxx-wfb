@@ -1,118 +1,54 @@
-import React,{Component,Fragment} from 'react'
+import React,{PureComponent,Fragment} from 'react'
 
-// let defaultProps={
-//
-// }
-//
-// let newProps=Object.assign({},defaultProps)
 
-export default class InfoList extends Component{
+
+export default class InfoList extends PureComponent{
     constructor(props){
         super(props)
+        this.state={
+            // menuList:this.props.params
+        }
     }
-    render(){
-        return (
-            <Fragment>
-                <div className='middle'>
-                    <span></span>
-                    {this.props.type=='declare'?
-                        <div className="list-box">
-                            <div className="list list1">
-                                <div className="title">创业启动资金正常</div>
-                                <div className="text">申报单号：10988763299762393</div>
-                                <div className="text">申报时间：2018-10-12 14:23:34</div>
-                            </div>
-                            <div className="list list1">
-                                <div className="title">创业启动资金正常</div>
-                                <div className="text">申报单号：10988763299762393</div>
-                                <div className="text">申报时间：2018-10-12 14:23:34</div>
-                            </div>
-                            <div className="list list1">
-                                <div className="title">创业启动资金正常</div>
-                                <div className="text">申报单号：10988763299762393</div>
-                                <div className="text">申报时间：2018-10-12 14:23:34</div>
-                            </div>
-                            <div className="list list1">
-                                <div className="title">创业启动资金正常</div>
-                                <div className="text">申报单号：10988763299762393</div>
-                                <div className="text">申报时间：2018-10-12 14:23:34</div>
-                            </div>
-                            <div className="list list1">
-                                <div className="title">创业启动资金正常</div>
-                                <div className="text">申报单号：10988763299762393</div>
-                                <div className="text">申报时间：2018-10-12 14:23:34</div>
-                            </div>
-                        </div>
-                        :
-                        <div className="list-box">
-                            <div className="list">
-                                <div className="title">企业法律培训</div>
-                                <div className="text">订单号：10988763299762393</div>
-                                <div className="text">交易金融：¥ 5000.00</div>
-                                <div className="text">交易时间：2018-10-12 14:23:34</div>
-                                <div className="text">交易服务商：环泰知识产权</div>
-                            </div>
-                            <div className="list">
-                                <div className="title">企业法律培训</div>
-                                <div className="text">订单号：10988763299762393</div>
-                                <div className="text">交易金融：¥ 5000.00</div>
-                                <div className="text">交易时间：2018-10-12 14:23:34</div>
-                                <div className="text">交易服务商：环泰知识产权</div>
-                            </div>
-                            <div className="list">
-                                <div className="title">企业法律培训</div>
-                                <div className="text">订单号：10988763299762393</div>
-                                <div className="text">交易金融：¥ 5000.00</div>
-                                <div className="text">交易时间：2018-10-12 14:23:34</div>
-                                <div className="text">交易服务商：环泰知识产权</div>
-                            </div>
-                            <div className="list">
-                                <div className="title">企业法律培训</div>
-                                <div className="text">订单号：10988763299762393</div>
-                                <div className="text">交易金融：¥ 5000.00</div>
-                                <div className="text">交易时间：2018-10-12 14:23:34</div>
-                                <div className="text">交易服务商：环泰知识产权</div>
-                            </div>
-                        </div>
-                    }
 
-                </div>
-                <div className='right'>
+    render(){
+        const {tradeInfo}=this.props
+        return (
+                <div className='right-container'>
                     <div className="title">{this.props.type=='transaction'?'交易信息':'申报信息'}</div>
                     {this.props.type=='transaction'?
                         <table>
                             <tbody>
                             <tr>
-                                <th>购买商品名称：企业法律培训</th>
+                                <th>购买商品名称：{tradeInfo?tradeInfo.productName:null}</th>
                                 <th></th>
                                 <th></th>
                             </tr>
                             <tr>
-                                <td>订单号：10988763299762393</td>
-                                <td>交易时间：2018-10-12 14:32:34</td>
-                                <td style={{display:'flex',flexWrap:'nowrap'}}>交易金额：<span>¥ 5000.00</span></td>
+                                <td>订单号：{tradeInfo?tradeInfo.orderID:null}</td>
+                                <td>交易时间：{tradeInfo?tradeInfo.createTime:null}</td>
+                                <td style={{display:'flex',flexWrap:'nowrap'}}>交易金额：<span>¥ {tradeInfo?tradeInfo.price:null}</span></td>
                             </tr>
                             <tr><td></td><td></td><td></td></tr>
                             <tr>
-                                <td>企业：成都高新物联网科技有限公司</td>
-                                <td>注册时间：2018-07-01</td>
-                                <td>注册电话：13880966893</td>
+                                <td>企业：{tradeInfo?tradeInfo.companyName:null}</td>
+                                <td>注册时间：{tradeInfo?tradeInfo.createTime:null}</td>
+                                <td>注册电话：{tradeInfo?tradeInfo.ownerMobile:null}</td>
                             </tr>
                             <tr>
                                 <td>星级：<i></i><i></i><i></i><i></i><i></i></td>
-                                <td>信用券申领时间：2018-07-01 10:17:26</td>
-                                <td>创新信用券状态：已使用</td>
+                                <td>信用券申领时间：{tradeInfo?tradeInfo.createTime:null}</td>
+                                <td>创新信用券状态：{tradeInfo?tradeInfo.statusName:null}</td>
                             </tr>
                             <tr><td></td><td></td><td></td></tr>
                             <tr>
-                                <td>服务商：环泰知识产权有限公司</td>
-                                <td>注册时间：2018-07-01</td>
-                                <td>注册电话：13880966893</td>
+                                <td>服务商：{tradeInfo?tradeInfo.providerName:null}</td>
+                                <td>注册时间：{tradeInfo?tradeInfo.createTime:null}</td>
+                                <td>注册电话：{tradeInfo?tradeInfo.providerRegistPhone:null}</td>
                             </tr>
                             <tr>
                                 <td>星级：<i></i><i></i><i></i><i></i><i></i></td>
-                                <td>信用券兑现时间：2018-07-01 10:17:26</td>
-                                <td>创新信用券状态：已兑现</td>
+                                <td>信用券兑现时间：{tradeInfo?tradeInfo.createTime:null}</td>
+                                <td>创新信用券状态：{tradeInfo?tradeInfo.statusName:null}</td>
                             </tr>
                             <tr><td></td><td></td><td></td></tr>
                             <tr>
@@ -127,6 +63,7 @@ export default class InfoList extends Component{
                             </tr>
                             </tbody>
                         </table>
+
                     :
                         <table>
                             <tbody>
@@ -165,9 +102,7 @@ export default class InfoList extends Component{
                             </tbody>
                         </table>
                     }
-
                 </div>
-            </Fragment>
         )
     }
 }

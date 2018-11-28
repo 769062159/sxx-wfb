@@ -6,11 +6,30 @@ const getLeftList=(result)=>({
     result
 })
 
+const getProductList=(result)=>({
+    type: actionTypes.GET_PRODUCT_LIST,
+    result
+})
+
+/*
+export const getTransactionList=(options)=>{
+    return (dispatch)=>{
+        axios.get(Api.GET_FIND_PRODUCT+`?companyID=${options}`).then(res=>{
+            if(res.data.success){
+                dispatch(getProductList(res.companyAndProviderVo))
+            }
+        }).catch(err=>{
+            console.log(err)
+        })
+    }
+}
+*/
+
+/*
 export const getCompanyInfoList=()=>{
     return (dispatch)=>{
         axios.get(Api.GET_FIND_ALL).then(res=>{
             if(res.data.success){
-                console.log(getLeftList(res.data.companyAndProviderVo))
                 dispatch(getLeftList(res.data.companyAndProviderVo))
             }
         }).catch(err=>{
@@ -18,4 +37,4 @@ export const getCompanyInfoList=()=>{
             dispatch(getLeftList({}))
         })
     }
-}
+}*/

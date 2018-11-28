@@ -1,29 +1,22 @@
-import React,{Component} from 'react'
+import React,{PureComponent} from 'react'
 import { connect } from 'react-redux'
 import PinyinMatch from '../../utils/pinyinindex'
-import InfoList from "./infoList";
+import TransactionList from './transactionList'
 import AnimateComponent from "../AnimateComponent";
 import Popup from '../popup'
 import * as actionCreators from "./store/actionCreators";
 import axios from 'axios'
 import store from '../../store'
-
 import zhengshu from '../../assets/images/zhengshu.png'
 import * as Api from "../../api";
 import * as actionTypes from "./store/actionTypes";
-class Wfb extends Component{
+class Wfb extends PureComponent{
     constructor(props){
         super(props)
         this.state={
             tabStatus: 'transaction',//切换交易信息和申报信息列表，默认交易信息
             menuList:{},//遍历显示搜索结果列表
             menuListBox:{},//保存所有数据
-
-            transactionInfoBox:{},//用于存储交易搜索结果
-            transactionSearchList:{
-                company:[],
-                productProvider:[]
-            },//筛选结果
 
             declareInfoBox:this.props.declareInfo,//用于存储申报搜索结果
             declareSearchList:{
@@ -35,6 +28,10 @@ class Wfb extends Component{
 
     componentWillMount(){}
 
+    componentDidUpdate(){}
+
+    // shouldComponentUpdate(){}
+
     componentDidMount(){
         axios.get(Api.GET_FIND_ALL).then(res=>{
             if(res.data.success){
@@ -43,11 +40,14 @@ class Wfb extends Component{
                     result: res.data.companyAndProviderVo
                 })
             }
-            this.setState({menuList:this.props.transactionInfo,menuListBox:this.props.transactionInfo})
+            this.setState({menuList:this.props.transactionInfo,menuListBox:this.props.transactionInfo},()=>{
+                this.getProductList(null,this.state.menuList.company[0].companyID)
 
+            })
         }).catch(err=>{
             console.log(err)
         })
+
     }
 
     searchMethod=(keyword,list)=>{
@@ -95,15 +95,33 @@ class Wfb extends Component{
         }
     }
 
+    getProductList=(item,first)=>{
+        axios.get(Api.GET_FIND_PRODUCT+`?companyID=${item?item.companyID:first}`).then(res=>{
+            if(res.data.success){
+                store.dispatch({
+                    type: actionTypes.GET_PRODUCT_LIST,
+                    result: res.data.productInformationVo
+                })
+                this.setState({idBox:item?item.companyID:null,productInfo:this.props.productInfo},()=>{
+
+                    this.setState({orderID:this.props.productInfo[0].orderID},()=>{console.log(this.state.orderID)})
+                })
+            }
+        }).catch(err=>{
+            console.log(err)
+        })
+    }
+
     handleSelectId=(item)=>{
-        this.setState({idBox:item.id})
-        if(item.star>3){
-            this.openPopup.handleOpenPopup()
-        }
+        this.getProductList(item)
+    }
+
+    componentWillUpdate(){
+        // console.log(this.props.productInfo)
     }
 
     render(){
-        let { tabStatus, transactionInfoBox, declareInfoBox } = this.state
+        let { tabStatus, declareInfoBox } = this.state
         return (
             <div className='wfb-container'>
                 <div className="wfb-top boxShadow">
@@ -266,7 +284,11 @@ class Wfb extends Component{
                         }
                         <span></span>
                     </div>
-                    <InfoList type={this.state.tabStatus}/>
+                    {this.state.productInfo?<TransactionList
+                        type={this.state.tabStatus}
+                        productInfo={this.state.productInfo}
+                        orderID={this.state.orderID}
+                    />:null}
                 </div>
             </div>
         )
@@ -275,12 +297,16 @@ class Wfb extends Component{
 
 const mapStateToProps=(state)=>({
     transactionInfo: state.wfb.transactionInfo,
-    declareInfo: state.wfb.declareInfo
+    declareInfo: state.wfb.declareInfo,
+    productInfo:state.wfb.productInfo
 })
 
 const mapDispatchToProps=(dispatch)=>({
     getCompanyList(){
         dispatch(actionCreators.getCompanyInfoList())
+    },
+    transaction(options){
+        dispatch(actionCreators.getTransactionList(options))
     }
 })
 
