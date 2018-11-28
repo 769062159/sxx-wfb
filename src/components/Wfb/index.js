@@ -5,18 +5,24 @@ import InfoList from "./infoList";
 import AnimateComponent from "../AnimateComponent";
 import Popup from '../popup'
 import * as actionCreators from "./store/actionCreators";
+import axios from 'axios'
+import store from '../../store'
 
 import zhengshu from '../../assets/images/zhengshu.png'
+import * as Api from "../../api";
+import * as actionTypes from "./store/actionTypes";
 class Wfb extends Component{
     constructor(props){
         super(props)
         this.state={
             tabStatus: 'transaction',//切换交易信息和申报信息列表，默认交易信息
+            menuList:{},//遍历显示搜索结果列表
+            menuListBox:{},//保存所有数据
 
-            transactionInfoBox:this.props.transactionInfo,//用于存储交易搜索结果
+            transactionInfoBox:{},//用于存储交易搜索结果
             transactionSearchList:{
-                enterprise:[],
-                service:[]
+                company:[],
+                productProvider:[]
             },//筛选结果
 
             declareInfoBox:this.props.declareInfo,//用于存储申报搜索结果
@@ -27,53 +33,50 @@ class Wfb extends Component{
         }
     }
 
-    componentWillMount(){
-
-    }
+    componentWillMount(){}
 
     componentDidMount(){
-        this.props.getCompanyList()
+        axios.get(Api.GET_FIND_ALL).then(res=>{
+            if(res.data.success){
+                store.dispatch({
+                    type: actionTypes.GET_MENU_LIST,
+                    result: res.data.companyAndProviderVo
+                })
+            }
+            this.setState({menuList:this.props.transactionInfo,menuListBox:this.props.transactionInfo})
+
+        }).catch(err=>{
+            console.log(err)
+        })
+    }
+
+    searchMethod=(keyword,list)=>{
+        let boxSearchList={company:[],productProvider:[]}
+        if(list.company && list.productProvider){
+            list.company.map((v)=>{
+                if (PinyinMatch.match(v.companyName.toString().toUpperCase(), keyword)) {
+                    boxSearchList.company.push(v)
+                }
+            })
+            list.productProvider.map((v)=>{
+                if (PinyinMatch.match(v.providerName.toString().toUpperCase(), keyword)) {
+                    boxSearchList.productProvider.push(v)
+                }
+            })
+        }
+        return boxSearchList
     }
 
     selectCompany=(e,type)=>{
-        let {transactionSearchList,declareSearchList}=this.state
+        let {menuList,menuListBox}=this.state
         let keyword = e.target.value.replace(/\s+/g, '').toUpperCase().toString()
         if(type==='transaction'){
-            //每次输入先清空暂存搜索列表
-            transactionSearchList.enterprise.length=0
-            transactionSearchList.service.length=0
-            this.props.transactionInfo.enterprise.map(v=>{
-                if (PinyinMatch.match(v.company.toString().toUpperCase(), keyword)) {
-                    transactionSearchList.enterprise.push(v)
-                }
-            })
-            this.props.transactionInfo.service.map(v=>{
-                if (PinyinMatch.match(v.company.toString().toUpperCase(), keyword)) {
-                    transactionSearchList.service.push(v)
-                }
-            })
-            this.setState({transactionInfoBox:transactionSearchList})
+            let listBox=this.searchMethod(keyword,menuList)
+             this.setState({menuList:listBox})
         }else{
-            declareSearchList.enterprise.length=0
-            declareSearchList.service.length=0
-            this.props.declareInfo.enterprise.map(v=>{
-                if (PinyinMatch.match(v.company.toString().toUpperCase(), keyword)) {
-                    declareSearchList.enterprise.push(v)
-                }
-            })
-            this.props.declareInfo.service.map(v=>{
-                if (PinyinMatch.match(v.company.toString().toUpperCase(), keyword)) {
-                    declareSearchList.service.push(v)
-                }
-            })
-            this.setState({declareInfoBox:declareSearchList})
+
         }
-        if(keyword===''){
-            this.setState({
-                transactionInfoBox:this.props.transactionInfo,
-                declareInfoBox:this.props.declareInfo
-            })
-        }
+        if(keyword===''){this.setState({menuList:menuListBox})}
     }
 
     handleSearchList=(type)=>{
@@ -202,13 +205,13 @@ class Wfb extends Component{
                                 <div className="box-list">
                                     <span></span>
                                     <ul>
-                                        {transactionInfoBox.enterprise?transactionInfoBox.enterprise.map((item,index)=>{
+                                        {this.state.menuList.company?this.state.menuList.company.map((item,index)=>{
                                             return (
                                                 <li key={index}
-                                                    className={item.id===this.state.idBox?'boxShadow':null}
+                                                    className={item.companyID===this.state.idBox?'boxShadow':null}
                                                     onClick={()=>{this.handleSelectId(item)}}>
-                                                    <span></span><i className={item.star>3?'color':null}>{item.star}星</i>
-                                                    {item.company}
+                                                    <span></span><i className={item.credit>3?'color':null}>{item.credit}星</i>
+                                                    <div className="text">{item.companyName}</div>
                                                 </li>
                                             )
                                         }):null}
@@ -218,11 +221,11 @@ class Wfb extends Component{
                                 <div className="box-list">
                                     <span></span>
                                     <ul>
-                                        {transactionInfoBox.service?transactionInfoBox.service.map((item,index)=>{
+                                        {this.state.menuList.productProvider?this.state.menuList.productProvider.map((item,index)=>{
                                             return (
                                                 <li key={index}>
-                                                    <span></span><i className={item.star>3?'color':null}>{item.star}星</i>
-                                                    {item.company}
+                                                    <span></span><i className={item.credit>3?'color':null}>{item.credit}星</i>
+                                                    <div className="text">{item.providerName}</div>
                                                 </li>
                                             )
                                         }):null}
@@ -272,8 +275,7 @@ class Wfb extends Component{
 
 const mapStateToProps=(state)=>({
     transactionInfo: state.wfb.transactionInfo,
-    declareInfo: state.wfb.declareInfo,
-    info:state.wfb.info
+    declareInfo: state.wfb.declareInfo
 })
 
 const mapDispatchToProps=(dispatch)=>({

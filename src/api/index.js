@@ -1,6 +1,6 @@
 let env = process.env.NODE_ENV
 
-const HOST = env === 'production'? '' : 'http://192.168.0.102:31000'
+const HOST = env === 'production'? '' : 'http://192.168.0.101:31000'
 
 //微腐败交易信息接口
 //显示公司和服务商列表

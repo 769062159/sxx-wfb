@@ -9,7 +9,8 @@ const getLeftList=(result)=>({
 export const getCompanyInfoList=()=>{
     return (dispatch)=>{
         axios.get(Api.GET_FIND_ALL).then(res=>{
-            if(res.data.code===10000){
+            if(res.data.success){
+                console.log(getLeftList(res.data.companyAndProviderVo))
                 dispatch(getLeftList(res.data.companyAndProviderVo))
             }
         }).catch(err=>{
