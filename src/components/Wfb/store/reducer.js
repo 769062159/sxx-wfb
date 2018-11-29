@@ -111,6 +111,21 @@ export default (state = defaultState, action)=>{
                 ...state,
                 dataInfo:action.result
             }
+        case actionTypes.GET_DECLARE_LIST:
+            return {
+                ...state,
+                declareInfo: action.result
+            }
+        case actionTypes.GET_DECLAR_ORDER:
+            return {
+                ...state,
+                declareOrderInfo:action.result
+            }
+        case actionTypes.GET_DECLARE_INFO:
+            return {
+                ...state,
+                declareDetailInfo:action.result
+            }
         default:
             return state
     }

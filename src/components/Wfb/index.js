@@ -20,6 +20,10 @@ class Wfb extends PureComponent{
             menuList:{},//遍历显示搜索结果列表
             menuListBox:{},//保存所有数据
 
+            declareList:{},
+            declareListBox:{},
+
+            idDeclareBox:'',
             declareInfoBox:this.props.declareInfo,//用于存储申报搜索结果
             declareSearchList:{
                 enterprise:[],
@@ -32,8 +36,6 @@ class Wfb extends PureComponent{
 
     componentDidUpdate(){}
 
-    // shouldComponentUpdate(){}
-
     componentDidMount(){
         axios.get(Api.GET_FIND_DATA).then(res=>{
             if(res.data.success){
@@ -42,7 +44,7 @@ class Wfb extends PureComponent{
                     result: res.data.transactionData
                 })
             }
-            this.setState({dataInfo:this.props.dataInfo},()=>{})
+            this.setState({dataInfo:this.props.dataInfo})
         }).catch(err=>{
             console.log(err)
         })
@@ -55,6 +57,20 @@ class Wfb extends PureComponent{
             }
             this.setState({menuList:this.props.transactionInfo,menuListBox:this.props.transactionInfo},()=>{
                 this.getProductList(null,this.state.menuList.company[0].companyID)
+            })
+        }).catch(err=>{
+            console.log(err)
+        })
+
+        axios.get(Api.GET_DECLARE_LIST).then(res=>{
+            if(res.data.success){
+                store.dispatch({
+                    type: actionTypes.GET_DECLARE_LIST,
+                    result: res.data.scCorporateCenterVo
+                })
+            }
+            this.setState({declareList:this.props.declareInfo,declareListBox:this.props.declareInfo},()=>{
+               this.getDeclareOrder(null,this.state.declareList[0].id)
             })
         }).catch(err=>{
             console.log(err)
@@ -111,30 +127,25 @@ class Wfb extends PureComponent{
     }
 
     selectCompany=(e,type)=>{
-        let {menuList,menuListBox}=this.state
+        let {menuList,menuListBox,declareInfoBox,declareList}=this.state
         let keyword = e.target.value.replace(/\s+/g, '').toUpperCase().toString()
         if(type==='transaction'){
             let listBox=this.searchMethod(keyword,menuList)
-             this.setState({menuList:listBox})
+            this.setState({menuList:listBox})
         }else{
-
+            let listBox=this.searchMethod(keyword,declareList)
+            this.setState({menuList:listBox})
         }
-        if(keyword===''){this.setState({menuList:menuListBox})}
+        if(keyword===''){this.setState({menuList:menuListBox,declareList:declareInfoBox})}
     }
 
     handleSearchList=(type)=>{
         //切换交易和申报按钮
         this.refs.search.value=''//清空输入框的值
         if(type=='transaction'){//还原列表
-            this.setState({
-                tabStatus:'transaction',
-                transactionInfoBox:this.props.transactionInfo
-            })
+            this.setState({tabStatus:'transaction'})
         }else{
-            this.setState({
-                tabStatus:'declare',
-                declareInfoBox:this.props.declareInfo
-            })
+            this.setState({tabStatus:'declare'})
         }
     }
 
@@ -142,12 +153,50 @@ class Wfb extends PureComponent{
         this.getProductList(item)
     }
 
+    handleSelectDeclareId=(item)=>{
+        this.getDeclareOrder(item)
+    }
+
+    getDeclareInfoList=(id)=>{
+        axios.get(Api.GET_DECLARE_INFO+`?id=${id}`).then(res=>{
+            if(res.data.success){
+                store.dispatch({
+                    type: actionTypes.GET_DECLARE_INFO,
+                    result: res.data.scCompanyInfo
+                })
+                this.setState({idDeclareBox:id,declareDetailInfo:this.props.declareDetailInfo},()=>{
+                    console.log(this.state.declareDetailInfo)
+                })
+            }
+        }).catch(err=>{
+            console.log(err)
+        })
+    }
+
+    getDeclareOrder=(item,first)=>{
+        axios.get(Api.GET_DECLAR_ORDER+`?companyId=${item?item.id:first}`).then(res=>{
+            if(res.data.success){
+                store.dispatch({
+                    type: actionTypes.GET_DECLAR_ORDER,
+                    result: res.data.companyInfoVos
+                })
+                this.setState({idDeclareBox:item?item.id:null,declareOrderInfo:this.props.declareOrderInfo},()=>{
+                    this.setState({declare:this.props.declareOrderInfo[0].declareNo},()=>{
+                        this.getDeclareInfoList(this.state.declare)
+                    })
+                })
+            }
+        }).catch(err=>{
+            console.log(err)
+        })
+    }
+
     componentWillUpdate(){
         // console.log(this.props.productInfo)
     }
 
     render(){
-        let { tabStatus, declareInfoBox ,dataInfo} = this.state
+        let { tabStatus, declareList ,dataInfo} = this.state
         return (
             <div className='wfb-container'>
                 <div className="wfb-top boxShadow">
@@ -161,7 +210,7 @@ class Wfb extends PureComponent{
                                 <span>
                                 <AnimateComponent value={dataInfo?dataInfo.amount>10000?Math.ceil(dataInfo.amount/10000):dataInfo.amount:null}/>
                                     {dataInfo?dataInfo.amount>10000?<span>万</span>:'':null}
-                                    <i>￥</i>
+
                                 </span>
                             </div>
                         </div>
@@ -173,7 +222,7 @@ class Wfb extends PureComponent{
                                 申请信用券次数：<span><AnimateComponent value={dataInfo?dataInfo.applicationCount:null}/></span>
                             </div>
                             <div className="text">
-                                申请信用券金额：<span><AnimateComponent value={dataInfo?dataInfo.discountMoney:null}/><i>￥</i></span>
+                                申请信用券金额：<span><AnimateComponent value={dataInfo?dataInfo.discountMoney:null}/></span>
                             </div>
                         </div>
                         <span></span>
@@ -184,7 +233,7 @@ class Wfb extends PureComponent{
                                 服务商兑现次数：<span><AnimateComponent value={dataInfo?dataInfo.changeCount:null}/></span>
                             </div>
                             <div className="text">
-                                服务商兑现金额：<span><AnimateComponent value={dataInfo?dataInfo.changeAmount:null}/><i>￥</i></span>
+                                服务商兑现金额：<span><AnimateComponent value={dataInfo?dataInfo.changeAmount:null}/></span>
                             </div>
                         </div>
                         <span></span>
@@ -195,11 +244,11 @@ class Wfb extends PureComponent{
                                 最大单笔交易金额：
                                 <span><AnimateComponent value={dataInfo?dataInfo.maxAmount>10000?Math.ceil(dataInfo.maxAmount/10000):dataInfo.maxAmount:null}/>
                                     {dataInfo?dataInfo.maxAmount>10000?<span>万</span>:'':null}
-                                <i>￥</i>
+
                                 </span>
                             </div>
                             <div className="text">
-                                最小单笔交易金额：<span><AnimateComponent value={dataInfo?dataInfo.minAmount:null}/><i>￥</i></span>
+                                最小单笔交易金额：<span><AnimateComponent value={dataInfo?dataInfo.minAmount:null}/></span>
                             </div>
                         </div>
                     </div>
@@ -291,30 +340,19 @@ class Wfb extends PureComponent{
                                 <div className="box-list" style={{height:'560px'}}>
                                     <span></span>
                                     <ul>
-                                        {declareInfoBox.enterprise.map((item,index)=>{
+                                        {declareList.length?declareList.map((item,index)=>{
                                             return (
-                                                <li key={index}>
-                                                    <span></span><i className={item.star>3?'color':null}>{item.star}星</i>
-                                                    {item.company}
+                                                <li key={index}
+                                                    className={item.id===this.state.idDeclareBox?'active':null}
+                                                    onClick={()=>{this.handleSelectDeclareId(item)}}
+                                                >
+                                                    <span></span><i className={item.state>3?'color':null}>{item.state}星</i>
+                                                    {item.corporateName}
                                                 </li>
                                             )
-                                        })}
+                                        }):null}
                                     </ul>
                                 </div>
-                                {/*<div className="title">服务商</div>
-                                <div className="box-list">
-                                    <span></span>
-                                    <ul>
-                                        {declareInfoBox.service.map((item,index)=>{
-                                            return (
-                                                <li key={index}>
-                                                    <span></span><i className={item.star>3?'color':null}>{item.star}星</i>
-                                                    {item.company}
-                                                </li>
-                                            )
-                                        })}
-                                    </ul>
-                                </div>*/}
                             </div>
                         }
                         <span></span>
@@ -322,7 +360,7 @@ class Wfb extends PureComponent{
                     {this.state.productInfo?<TransactionList
                         type={this.state.tabStatus}
                         productInfo={this.state.productInfo}
-                        orderID={this.state.orderID}
+                        declareOrderInfo={this.state.declareOrderInfo}
                     />:null}
                     <InfoList type={this.state.tabStatus}/>
                 </div>
@@ -337,6 +375,7 @@ const mapStateToProps=(state)=>({
     tradeInfo: state.wfb.tradeInfo,
     dataInfo:state.wfb.dataInfo,
     declareInfo: state.wfb.declareInfo,
+    declareOrderInfo: state.wfb.declareOrderInfo
 })
 
 const mapDispatchToProps=(dispatch)=>({

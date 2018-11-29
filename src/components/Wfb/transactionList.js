@@ -5,19 +5,17 @@ import * as Api from "../../api";
 import store from "../../store";
 import * as actionTypes from "./store/actionTypes";
 import moment from 'moment'
-// import InfoList from "./infoList";
+import lodashId from "lodash/uniqueId";
 
 class TransactionList extends PureComponent{
     constructor(props){
         super(props)
         this.state={
-            idBox:''
+            idBox:'',
+            idDeclareBox: ''
         }
     }
-    componentDidMount(){
-        // console.log(this.props.orderID)
-        // this.getInfo(null,this.props.orderID)
-    }
+    componentDidMount(){}
 
     getInfo=(item)=>{
         axios.get(Api.GET_FIND_TRADE+`?orderID=${item.orderID}`).then(res=>{
@@ -26,6 +24,7 @@ class TransactionList extends PureComponent{
                     type: actionTypes.GET_TRADE_LIST,
                     result: res.data.tradeInformationVos
                 })
+                console.log(res)
                 this.setState({idBox:item.orderID,tradeInfo:this.props.tradeInfo})
             }
         }).catch(err=>{
@@ -37,37 +36,45 @@ class TransactionList extends PureComponent{
         this.getInfo(item)
     }
 
+    handleDeclareChange=(item)=>{
+        this.getDeclareInfo(item)
+    }
+
+    getDeclareInfo=(item)=>{
+        axios.get(Api.GET_DECLARE_INFO+`?id=${item.declareNo}`).then(res=>{
+            if(res.data.success){
+                store.dispatch({
+                    type: actionTypes.GET_DECLARE_INFO,
+                    result: res.data.scCompanyInfo
+                })
+                this.setState({idDeclareBox:item.declareNo,declareDetailInfo:this.props.declareDetailInfo},()=>{
+                    console.log(this.state.declareDetailInfo)
+                })
+            }
+        }).catch(err=>{
+            console.log(err)
+        })
+    }
+
     render(){
+        const {declareOrderInfo}=this.props
         return (
             <div className='middle'>
                 <span></span>
                 {this.props.type=='declare'?
                     <div className="list-box">
-                        <div className="list list1">
-                            <div className="title">创业启动资金正常</div>
-                            <div className="text">申报单号：10988763299762393</div>
-                            <div className="text">申报时间：2018-10-12 14:23:34</div>
-                        </div>
-                        <div className="list list1">
-                            <div className="title">创业启动资金正常</div>
-                            <div className="text">申报单号：10988763299762393</div>
-                            <div className="text">申报时间：2018-10-12 14:23:34</div>
-                        </div>
-                        <div className="list list1">
-                            <div className="title">创业启动资金正常</div>
-                            <div className="text">申报单号：10988763299762393</div>
-                            <div className="text">申报时间：2018-10-12 14:23:34</div>
-                        </div>
-                        <div className="list list1">
-                            <div className="title">创业启动资金正常</div>
-                            <div className="text">申报单号：10988763299762393</div>
-                            <div className="text">申报时间：2018-10-12 14:23:34</div>
-                        </div>
-                        <div className="list list1">
-                            <div className="title">创业启动资金正常</div>
-                            <div className="text">申报单号：10988763299762393</div>
-                            <div className="text">申报时间：2018-10-12 14:23:34</div>
-                        </div>
+                        {declareOrderInfo?declareOrderInfo.map((item)=>{
+                            return (
+                                <div className={item.declareNo===this.state.idDeclareBox?'active list list1':'list list1'}
+                                     key={lodashId()}
+                                     onClick={()=>{this.handleDeclareChange(item)}}
+                                >
+                                    <div className="title">{item.declarePolicyName}</div>
+                                    <div className="text">申报单号：{item.declareNo}</div>
+                                    <div className="text">申报时间：{item.declareTime}</div>
+                                </div>
+                            )
+                        }):null}
                     </div>
                     :
                     <div className="list-box">
@@ -95,6 +102,7 @@ class TransactionList extends PureComponent{
 
 }
 const mapStateToProps=(state)=>({
-    tradeInfo: state.wfb.tradeInfo
+    tradeInfo: state.wfb.tradeInfo,
+    declareDetailInfo:state.wfb.declareDetailInfo
 })
 export default connect(mapStateToProps,null)(TransactionList)
