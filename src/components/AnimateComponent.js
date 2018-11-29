@@ -25,7 +25,7 @@ class Demo extends React.Component {
     return (
           <TweenOne
             animation={{
-              Children: { value:  value||10000, floatLength: 0 },
+              Children: { value:  value||0, floatLength: 0 },
               duration: `${duration}`,
             }}
           >

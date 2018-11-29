@@ -84,6 +84,11 @@ export default (state = defaultState, action)=>{
                 ...state,
                 tradeInfo:action.result
             }
+        case actionTypes.GET_FIND_DATA:
+            return {
+                ...state,
+                dataInfo:action.result
+            }
         default:
             return state
     }

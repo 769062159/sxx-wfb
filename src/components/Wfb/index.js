@@ -34,6 +34,17 @@ class Wfb extends PureComponent{
     // shouldComponentUpdate(){}
 
     componentDidMount(){
+        axios.get(Api.GET_FIND_DATA).then(res=>{
+            if(res.data.success){
+                store.dispatch({
+                    type: actionTypes.GET_FIND_DATA,
+                    result: res.data.transactionData
+                })
+            }
+            this.setState({dataInfo:this.props.dataInfo},()=>{})
+        }).catch(err=>{
+            console.log(err)
+        })
         axios.get(Api.GET_FIND_ALL).then(res=>{
             if(res.data.success){
                 store.dispatch({
@@ -135,28 +146,17 @@ class Wfb extends PureComponent{
     }
 
     render(){
-        let { tabStatus, declareInfoBox } = this.state
+        let { tabStatus, declareInfoBox ,dataInfo} = this.state
         return (
             <div className='wfb-container'>
                 <div className="wfb-top boxShadow">
                     <div className="list">
                         <div className="box">
                             <div className="text">
-                                交易次数：<span><AnimateComponent value={100}/></span>
+                                交易次数：<span><AnimateComponent value={dataInfo?dataInfo.dealCount:null}/></span>
                             </div>
                             <div className="text">
-                                交易金额：<span><AnimateComponent value={10000}/><i>￥</i></span>
-                            </div>
-                        </div>
-                        <span></span>
-                    </div>
-                    <div className="list">
-                        <div className="box">
-                            <div className="text">
-                                申请兑换次数：<span><AnimateComponent value={5}/></span>
-                            </div>
-                            <div className="text">
-                                申请兑换金额：<span><AnimateComponent value={10000}/><i>￥</i></span>
+                                交易金额：<span><AnimateComponent value={dataInfo?dataInfo.amount:null}/><i>￥</i></span>
                             </div>
                         </div>
                         <span></span>
@@ -164,10 +164,10 @@ class Wfb extends PureComponent{
                     <div className="list">
                         <div className="box">
                             <div className="text">
-                                兑换次数：<span><AnimateComponent value={25}/></span>
+                                申请兑现次数：<span><AnimateComponent value={dataInfo?dataInfo.applicationCount:null}/></span>
                             </div>
                             <div className="text">
-                                兑换金额：<span><AnimateComponent value={350000}/><i>￥</i></span>
+                                申请兑现金额：<span><AnimateComponent value={dataInfo?dataInfo.discountMoney:null}/><i>￥</i></span>
                             </div>
                         </div>
                         <span></span>
@@ -175,10 +175,21 @@ class Wfb extends PureComponent{
                     <div className="list">
                         <div className="box">
                             <div className="text">
-                                最大单笔交易金额：<span><AnimateComponent value={2500}/></span>
+                                兑现次数：<span><AnimateComponent value={dataInfo?dataInfo.changeCount:null}/></span>
                             </div>
                             <div className="text">
-                                最小单笔交易金额：<span><AnimateComponent value={100}/><i>￥</i></span>
+                                兑现金额：<span><AnimateComponent value={dataInfo?dataInfo.changeAmount:null}/><i>￥</i></span>
+                            </div>
+                        </div>
+                        <span></span>
+                    </div>
+                    <div className="list">
+                        <div className="box">
+                            <div className="text">
+                                最大单笔交易金额：<span><AnimateComponent value={dataInfo?dataInfo.maxAmount:null}/><i>￥</i></span>
+                            </div>
+                            <div className="text">
+                                最小单笔交易金额：<span><AnimateComponent value={dataInfo?dataInfo.minAmount:null}/><i>￥</i></span>
                             </div>
                         </div>
                     </div>
@@ -314,7 +325,7 @@ const mapStateToProps=(state)=>({
     transactionInfo: state.wfb.transactionInfo,
     productInfo:state.wfb.productInfo,
     tradeInfo: state.wfb.tradeInfo,
-
+    dataInfo:state.wfb.dataInfo,
     declareInfo: state.wfb.declareInfo,
 })
 

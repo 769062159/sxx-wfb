@@ -9,3 +9,5 @@ export const GET_FIND_ALL = HOST+'/product/findAll'
 export const GET_FIND_PRODUCT = HOST+'/product/productInformation'
 //展示交易信息
 export const GET_FIND_TRADE = HOST+'/product/findTrandeInformationList'
+//展示统计信息
+export const GET_FIND_DATA = HOST+'/product/findTransactionDataList'
