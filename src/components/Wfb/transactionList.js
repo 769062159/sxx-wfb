@@ -18,8 +18,8 @@ class TransactionList extends PureComponent{
         // this.getInfo(null,this.props.orderID)
     }
 
-    getInfo=(item,first)=>{
-        axios.get(Api.GET_FIND_TRAND+`?orderID=${item?item.orderID:first}`).then(res=>{
+    getInfo=(item)=>{
+        axios.get(Api.GET_FIND_TRADE+`?orderID=${item.orderID}`).then(res=>{
             if(res.data.success){
                 store.dispatch({
                     type: actionTypes.GET_TRADE_LIST,
@@ -86,7 +86,7 @@ class TransactionList extends PureComponent{
                         }):null}
                     </div>
                 }
-                <InfoList type={this.props.type} tradeInfo={this.state.tradeInfo}/>
+
             </div>
         )
     }

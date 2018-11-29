@@ -1,12 +1,19 @@
 import React,{PureComponent,Fragment} from 'react'
-
-
-
-export default class InfoList extends PureComponent{
+import {connect} from 'react-redux'
+import moment from 'moment'
+class InfoList extends PureComponent{
     constructor(props){
         super(props)
-        this.state={
-            // menuList:this.props.params
+        this.state={}
+    }
+
+    getStar=(star)=>{
+        let items = [];
+        if(star){
+            for (let i = 0; i < star; i++) {
+                items.push(<i key={i}></i>);
+            }
+            return items
         }
     }
 
@@ -19,51 +26,55 @@ export default class InfoList extends PureComponent{
                         <table>
                             <tbody>
                             <tr>
-                                <th>购买商品名称：{tradeInfo?tradeInfo.productName:null}</th>
-                                <th></th>
-                                <th></th>
+                                <th colSpan={3}>购买商品名称：{tradeInfo?tradeInfo.productName:null}</th>
                             </tr>
                             <tr>
                                 <td>订单号：{tradeInfo?tradeInfo.orderID:null}</td>
-                                <td>交易时间：{tradeInfo?tradeInfo.createTime:null}</td>
+                                <td>交易时间：{tradeInfo?moment(tradeInfo.orderCreateTime).format('YYYY-MM-DD'):null}</td>
                                 <td style={{display:'flex',flexWrap:'nowrap'}}>交易金额：<span>¥ {tradeInfo?tradeInfo.price:null}</span></td>
                             </tr>
                             <tr><td></td><td></td><td></td></tr>
                             <tr>
                                 <td>企业：{tradeInfo?tradeInfo.companyName:null}</td>
-                                <td>注册时间：{tradeInfo?tradeInfo.createTime:null}</td>
+                                <td>注册时间：{tradeInfo?moment(tradeInfo.registerDate).format('YYYY-MM-DD'):null}</td>
                                 <td>注册电话：{tradeInfo?tradeInfo.ownerMobile:null}</td>
                             </tr>
                             <tr>
-                                <td>星级：<i></i><i></i><i></i><i></i><i></i></td>
-                                <td>信用券申领时间：{tradeInfo?tradeInfo.createTime:null}</td>
-                                <td>创新信用券状态：{tradeInfo?tradeInfo.statusName:null}</td>
+                                <td>星级：
+                                    {tradeInfo? this.getStar(tradeInfo.companyCredit) :null}
+
+                                {/*<i></i><i></i><i></i><i></i><i></i>*/}
+                                </td>
+                                <td>信用券申领时间：{tradeInfo?moment(tradeInfo.companyCouponCreateTime).format('YYYY-MM-DD'):null}</td>
+                                <td>创新信用券状态：{tradeInfo?tradeInfo.isUse:null}</td>
                             </tr>
                             <tr><td></td><td></td><td></td></tr>
                             <tr>
                                 <td>服务商：{tradeInfo?tradeInfo.providerName:null}</td>
-                                <td>注册时间：{tradeInfo?tradeInfo.createTime:null}</td>
+                                <td>注册时间：{tradeInfo?moment(tradeInfo.providerCreateTime).format('YYYY-MM-DD'):null}</td>
                                 <td>注册电话：{tradeInfo?tradeInfo.providerRegistPhone:null}</td>
                             </tr>
                             <tr>
-                                <td>星级：<i></i><i></i><i></i><i></i><i></i></td>
-                                <td>信用券兑现时间：{tradeInfo?tradeInfo.createTime:null}</td>
-                                <td>创新信用券状态：{tradeInfo?tradeInfo.statusName:null}</td>
+                                <td>星级：
+                                    {tradeInfo?this.getStar(tradeInfo.providerCredit):null}
+                                {/*<i></i><i></i><i></i><i></i><i></i>*/}
+                                </td>
+                                <td>信用券兑现时间：{tradeInfo?moment(tradeInfo.providerCouponCreateTime).format('YYYY-MM-DD'):null}</td>
+                                <td>创新信用券状态：{tradeInfo?tradeInfo.providerStatus:null}</td>
                             </tr>
                             <tr><td></td><td></td><td></td></tr>
                             <tr>
-                                <td>信用券编号：<a href="javascript:;">181025142410441</a></td>
-                                <td>信用券发放时间：2018-07-01 10:17:26</td>
-                                <td>兑现审核人：黄琪</td>
+                                <td>信用券编号：<a href="javascript:;">{tradeInfo?tradeInfo.couponID:null}</a></td>
+                                <td>信用券发放时间：{tradeInfo?moment(tradeInfo.couponCreateTime).format('YYYY-MM-DD'):null}</td>
+                                <td>兑现审核人：{tradeInfo?tradeInfo.auditAdmin:null}</td>
                             </tr>
                             <tr>
-                                <td>审核状态：已审核</td>
-                                <td>审核时间：2018-07-01 10:17:26</td>
-                                <td>审核是否通过：是</td>
+                                <td>审核状态：{tradeInfo?tradeInfo.statusName:null}</td>
+                                <td>审核时间：{tradeInfo?moment(tradeInfo.auditTime).format('YYYY-MM-DD'):null}</td>
+                                <td>审核是否通过：{tradeInfo?tradeInfo.delete?'已通过':'未通过':null}</td>
                             </tr>
                             </tbody>
                         </table>
-
                     :
                         <table>
                             <tbody>
@@ -106,3 +117,7 @@ export default class InfoList extends PureComponent{
         )
     }
 }
+const mapStateToProps=(state)=>({
+    tradeInfo:state.wfb.tradeInfo
+})
+export default connect(mapStateToProps,null)(InfoList)

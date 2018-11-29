@@ -10,6 +10,7 @@ import store from '../../store'
 import zhengshu from '../../assets/images/zhengshu.png'
 import * as Api from "../../api";
 import * as actionTypes from "./store/actionTypes";
+import InfoList from "./infoList";
 class Wfb extends PureComponent{
     constructor(props){
         super(props)
@@ -42,12 +43,42 @@ class Wfb extends PureComponent{
             }
             this.setState({menuList:this.props.transactionInfo,menuListBox:this.props.transactionInfo},()=>{
                 this.getProductList(null,this.state.menuList.company[0].companyID)
-
             })
         }).catch(err=>{
             console.log(err)
         })
+    }
 
+    getProductList=(item,first)=>{
+        axios.get(Api.GET_FIND_PRODUCT+`?companyID=${item?item.companyID:first}`).then(res=>{
+            if(res.data.success){
+                store.dispatch({
+                    type: actionTypes.GET_PRODUCT_LIST,
+                    result: res.data.productInformationVo
+                })
+                this.setState({idBox:item?item.companyID:null,productInfo:this.props.productInfo},()=>{
+                    this.setState({orderID:this.props.productInfo[0].orderID},()=>{
+                        this.getInfoList(this.state.orderID)
+                    })
+                })
+            }
+        }).catch(err=>{
+            console.log(err)
+        })
+    }
+
+    getInfoList=(first)=>{
+        axios.get(Api.GET_FIND_TRADE+`?orderID=${first}`).then(res=>{
+            if(res.data.success){
+                store.dispatch({
+                    type: actionTypes.GET_TRADE_LIST,
+                    result: res.data.tradeInformationVos
+                })
+                this.setState({orderIdBox:first,tradeInfo:this.props.tradeInfo})
+            }
+        }).catch(err=>{
+            console.log(err)
+        })
     }
 
     searchMethod=(keyword,list)=>{
@@ -93,23 +124,6 @@ class Wfb extends PureComponent{
                 declareInfoBox:this.props.declareInfo
             })
         }
-    }
-
-    getProductList=(item,first)=>{
-        axios.get(Api.GET_FIND_PRODUCT+`?companyID=${item?item.companyID:first}`).then(res=>{
-            if(res.data.success){
-                store.dispatch({
-                    type: actionTypes.GET_PRODUCT_LIST,
-                    result: res.data.productInformationVo
-                })
-                this.setState({idBox:item?item.companyID:null,productInfo:this.props.productInfo},()=>{
-
-                    this.setState({orderID:this.props.productInfo[0].orderID},()=>{console.log(this.state.orderID)})
-                })
-            }
-        }).catch(err=>{
-            console.log(err)
-        })
     }
 
     handleSelectId=(item)=>{
@@ -253,7 +267,7 @@ class Wfb extends PureComponent{
                         :
                             <div className="content">
                                 <div className="title">企业</div>
-                                <div className="box-list">
+                                <div className="box-list" style={{height:'400px'}}>
                                     <span></span>
                                     <ul>
                                         {declareInfoBox.enterprise.map((item,index)=>{
@@ -266,7 +280,7 @@ class Wfb extends PureComponent{
                                         })}
                                     </ul>
                                 </div>
-                                <div className="title">服务商</div>
+                                {/*<div className="title">服务商</div>
                                 <div className="box-list">
                                     <span></span>
                                     <ul>
@@ -279,7 +293,7 @@ class Wfb extends PureComponent{
                                             )
                                         })}
                                     </ul>
-                                </div>
+                                </div>*/}
                             </div>
                         }
                         <span></span>
@@ -289,6 +303,7 @@ class Wfb extends PureComponent{
                         productInfo={this.state.productInfo}
                         orderID={this.state.orderID}
                     />:null}
+                    <InfoList type={this.state.tabStatus}/>
                 </div>
             </div>
         )
@@ -297,8 +312,10 @@ class Wfb extends PureComponent{
 
 const mapStateToProps=(state)=>({
     transactionInfo: state.wfb.transactionInfo,
+    productInfo:state.wfb.productInfo,
+    tradeInfo: state.wfb.tradeInfo,
+
     declareInfo: state.wfb.declareInfo,
-    productInfo:state.wfb.productInfo
 })
 
 const mapDispatchToProps=(dispatch)=>({
