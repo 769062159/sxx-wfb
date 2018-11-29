@@ -1,6 +1,8 @@
 import React,{PureComponent,Fragment} from 'react'
 import {connect} from 'react-redux'
 import moment from 'moment'
+import starY from '../../assets/images/starY.png'
+import starB from '../../assets/images/star.svg'
 class InfoList extends PureComponent{
     constructor(props){
         super(props)
@@ -11,7 +13,7 @@ class InfoList extends PureComponent{
         let items = [];
         if(star){
             for (let i = 0; i < star; i++) {
-                items.push(<i key={i}></i>);
+                items.push(<img key={i} className='i1' src={starY}></img>);
             }
             return items
         }
@@ -31,7 +33,11 @@ class InfoList extends PureComponent{
                             <tr>
                                 <td>订单号：{tradeInfo?tradeInfo.orderID:null}</td>
                                 <td>交易时间：{tradeInfo?moment(tradeInfo.orderCreateTime).format('YYYY-MM-DD'):null}</td>
-                                <td style={{display:'flex',flexWrap:'nowrap'}}>交易金额：<span>¥ {tradeInfo?tradeInfo.price:null}</span></td>
+                                <td style={{display:'flex',flexWrap:'nowrap'}}>交易金额：
+                                    <span>
+                                        ¥ {tradeInfo?tradeInfo.price>10000?Math.ceil(tradeInfo.price/10000)+'万':tradeInfo.price:null}
+                                    </span>
+                                </td>
                             </tr>
                             <tr><td></td><td></td><td></td></tr>
                             <tr>
@@ -95,7 +101,10 @@ class InfoList extends PureComponent{
                                 <td>注册电话：13880966893</td>
                             </tr>
                             <tr>
-                                <td>星级：<i></i><i></i><i></i><i></i><i></i></td>
+                                <td>星级：
+                                    <img src={starB} alt=""/><img src={starB} alt=""/><img src={starB} alt=""/><img src={starB} alt=""/><img src={starB} alt=""/>
+                                    {/*<i></i><i></i><i></i><i></i><i></i>*/}
+                                </td>
                                 <td>信用券申领时间：2018-07-01 10:17:26</td>
                                 <td>创新信用券状态：已下载</td>
                             </tr>

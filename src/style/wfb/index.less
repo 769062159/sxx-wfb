@@ -9,12 +9,18 @@
         span{
           font-size: 38px!important;
           color: #00FEFB;
+          &>span{
+            font-size: 20px!important;
+            margin-top: 0!important;
+            margin-left: 5px;
+            font-weight: bold;
+          }
           &>div{
             font-size: 30px!important;
           }
-          i{
+          /*i{
             font-size: 22px;
-          }
+          }*/
         }
       }
     }
@@ -87,17 +93,23 @@
           white-space: nowrap;
           transition: all 500ms;
           span{
-            font-size: 40px;
+            //font-size: 40px;
             color: #00FEFB;
             display: flex;
             flex-wrap: nowrap;
             transition: all 500ms;
+            &>span{
+              font-size: 20px;
+              margin-top: 5px;
+              margin-left: 5px;
+              font-weight: bold;
+            }
             &>div{
               font-size: 40px;
               transition: all 500ms;
             }
             i{
-              font-size: 22px;
+              font-size: 26px;
             }
           }
         }
@@ -205,6 +217,7 @@
       max-width: 400px;
       min-width: 340px;
       .search{
+        position: relative;
         display: flex;
         flex-wrap: nowrap;
         border-bottom: 1px solid #1890ff;
@@ -230,11 +243,15 @@
           color: #fff!important;
           margin-right: 10px;
         }
-        .icon-svg{
+        &>.icon-svg{
+          position: absolute;
+          top: 5px;
+          right: 10px;
           margin-top: 10px;
           width: 20px;
           height: 20px;
-          fill:#1890ff;
+          fill:#1890ff!important;
+          color: #1890ff;
           flex: 1;
           cursor: pointer;
         }
@@ -288,6 +305,12 @@
           ul{
             margin-left: 15px;
             li{
+              &.active{
+                background-color: rgba(24,144,255,0.16);
+              }
+              &:hover{
+                background-color: rgba(24,144,255,0.16);
+              }
               &>span{
                 display: block;
                 border-left: 1px solid #fff;
@@ -356,6 +379,10 @@
         overflow-x: hidden;
         overflow-y: auto;
         height:680px;
+        &>.active{
+          background-color: rgba(24,144,255,0.16);
+        }
+
         &::-webkit-scrollbar {
           width: 4px;
           background-color: #07204F;
@@ -370,13 +397,25 @@
           }*/
         }
         .list{
+          &:hover{
+            background-color: rgba(24,144,255,0.16);
+          }
           padding: 20px 10px;
           box-sizing: border-box;
           position: relative;
-          border-bottom: 1px solid #1890ff;
+          //border-bottom: 1px solid #1890ff;
           cursor: pointer;
+          span{
+            position: absolute;
+            width: 94%;
+            height: 1px;
+            display: block;
+            border-bottom: 1px solid #1890ff;
+            bottom: 0;
+          }
           &:last-child{
             border: 0!important;
+            span{border-bottom:0;}
           }
           .title{
             color: #00FEFB;
@@ -409,17 +448,19 @@
         width: 100%;
         color: #fff;
         margin-top: 20px;
-        margin-left: 20px;
+        //margin-left: 20px;
+        box-sizing: border-box;
         tr{
-          //min-width: 800px;
           font-size: 20px;
           height: 40px;
-          th{font-size: 18px;transition: all 500ms;}
+          th{padding: 0 10px;font-size: 18px;transition: all 500ms;}
           td{
+            position: relative;
+            padding: 0 10px;
+            box-sizing: border-box;
             font-size: 18px;
             line-height: 40px;
             white-space: nowrap;
-            position: relative;
             transition: all 500ms;
             font-family: "Microsoft Yahei"!important;
             &>a{
@@ -433,14 +474,20 @@
               font-size: 24px;
               transition: all 500ms;
             }
+            &>img{
+              width: 25px;
+              height: 23px;
+              margin-top: -5px;
+              margin-right: 5px;
+            }
+
             &>i{
-              display: block;
-              line-height: 25px;
-              margin-top: 5px;
+              padding-top: 20px;
               background: url("../../assets/images/star1.png") no-repeat;
               height:25px;width:25px;background-position: 0 -25px;
               display: inline-block;
               margin-right: 5px;
+              line-height: 25px;
             }
           }
         }
@@ -448,8 +495,8 @@
       .title{
         /*padding-top: 50px;
         box-sizing: border-box;*/
-        height:120px;
-        line-height: 160px;
+        height:60px;
+        line-height: 60px;
         font-size: 20px;
         color: #fff;
         text-align: center;

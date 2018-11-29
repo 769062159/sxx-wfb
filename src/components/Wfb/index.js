@@ -11,6 +11,7 @@ import zhengshu from '../../assets/images/zhengshu.png'
 import * as Api from "../../api";
 import * as actionTypes from "./store/actionTypes";
 import InfoList from "./infoList";
+
 class Wfb extends PureComponent{
     constructor(props){
         super(props)
@@ -156,7 +157,12 @@ class Wfb extends PureComponent{
                                 交易次数：<span><AnimateComponent value={dataInfo?dataInfo.dealCount:null}/></span>
                             </div>
                             <div className="text">
-                                交易金额：<span><AnimateComponent value={dataInfo?dataInfo.amount:null}/><i>￥</i></span>
+                                交易金额：
+                                <span>
+                                <AnimateComponent value={dataInfo?dataInfo.amount>10000?Math.ceil(dataInfo.amount/10000):dataInfo.amount:null}/>
+                                    {dataInfo?dataInfo.amount>10000?<span>万</span>:'':null}
+                                    <i>￥</i>
+                                </span>
                             </div>
                         </div>
                         <span></span>
@@ -186,7 +192,11 @@ class Wfb extends PureComponent{
                     <div className="list">
                         <div className="box">
                             <div className="text">
-                                最大单笔交易金额：<span><AnimateComponent value={dataInfo?dataInfo.maxAmount:null}/><i>￥</i></span>
+                                最大单笔交易金额：
+                                <span><AnimateComponent value={dataInfo?dataInfo.maxAmount>10000?Math.ceil(dataInfo.maxAmount/10000):dataInfo.maxAmount:null}/>
+                                    {dataInfo?dataInfo.maxAmount>10000?<span>万</span>:'':null}
+                                <i>￥</i>
+                                </span>
                             </div>
                             <div className="text">
                                 最小单笔交易金额：<span><AnimateComponent value={dataInfo?dataInfo.minAmount:null}/><i>￥</i></span>
@@ -251,7 +261,7 @@ class Wfb extends PureComponent{
                                         {this.state.menuList.company?this.state.menuList.company.map((item,index)=>{
                                             return (
                                                 <li key={index}
-                                                    className={item.companyID===this.state.idBox?'boxShadow':null}
+                                                    className={item.companyID===this.state.idBox?'active':null}
                                                     onClick={()=>{this.handleSelectId(item)}}>
                                                     <span></span><i className={item.credit>3?'color':null}>{item.credit}星</i>
                                                     <div className="text">{item.companyName}</div>

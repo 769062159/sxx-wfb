@@ -73,7 +73,7 @@ class TransactionList extends PureComponent{
                     <div className="list-box">
                         {this.props.productInfo?this.props.productInfo.map((item)=>{
                             return (
-                                <div className={item.orderID===this.state.idBox?'boxShadow list':'list'}
+                                <div className={item.orderID===this.state.idBox?'active list':'list'}
                                      key={item.orderID}
                                      onClick={()=>{this.handleChange(item)}}
                                 >
@@ -82,6 +82,7 @@ class TransactionList extends PureComponent{
                                     <div className="text">交易金融：¥ {item.price}</div>
                                     <div className="text">交易时间：{moment(item.createTime).format('YYYY-MM-DD')}</div>
                                     <div className="text">交易服务商：{item.providerName}</div>
+                                    <span></span>
                                 </div>
                             )
                         }):null}
