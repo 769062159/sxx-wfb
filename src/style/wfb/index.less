@@ -55,12 +55,7 @@
       }
     }
     .title{
-      height: 50px;
-      line-height: 50px;
       font-size: 20px;
-      color: #fff;
-      text-align: center;
-      border-bottom: 1px solid #1890ff;
     }
   }
 }
@@ -493,14 +488,21 @@
         }
       }
       .title{
+        &>span{
+          position: absolute;
+          bottom: 0;
+          width: 98%;
+          left: 10px;
+          border-bottom: 1px solid #1890ff;
+        }
         /*padding-top: 50px;
         box-sizing: border-box;*/
+        position: relative;
         height:60px;
         line-height: 60px;
         font-size: 20px;
         color: #fff;
         text-align: center;
-        border-bottom: 1px solid #1890ff;
       }
     }
   }

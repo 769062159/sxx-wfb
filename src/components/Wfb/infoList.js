@@ -23,7 +23,10 @@ class InfoList extends PureComponent{
         const {tradeInfo}=this.props
         return (
                 <div className='right-container'>
-                    <div className="title">{this.props.type=='transaction'?'交易信息':'申报信息'}</div>
+                    <div className="title">
+                        {this.props.type=='transaction'?'交易信息':'申报信息'}
+                        <span></span>
+                    </div>
                     {this.props.type=='transaction'?
                         <table>
                             <tbody>
