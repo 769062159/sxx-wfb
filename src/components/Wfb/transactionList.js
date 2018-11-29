@@ -4,7 +4,8 @@ import {connect} from 'react-redux'
 import * as Api from "../../api";
 import store from "../../store";
 import * as actionTypes from "./store/actionTypes";
-import InfoList from "./infoList";
+import moment from 'moment'
+// import InfoList from "./infoList";
 
 class TransactionList extends PureComponent{
     constructor(props){
@@ -79,7 +80,7 @@ class TransactionList extends PureComponent{
                                     <div className="title">{item.productName}</div>
                                     <div className="text">订单号：{item.orderID}</div>
                                     <div className="text">交易金融：¥ {item.price}</div>
-                                    <div className="text">交易时间：{item.createTime}</div>
+                                    <div className="text">交易时间：{moment(item.createTime).format('YYYY-MM-DD')}</div>
                                     <div className="text">交易服务商：{item.providerName}</div>
                                 </div>
                             )

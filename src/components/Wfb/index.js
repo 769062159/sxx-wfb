@@ -164,10 +164,10 @@ class Wfb extends PureComponent{
                     <div className="list">
                         <div className="box">
                             <div className="text">
-                                申请兑现次数：<span><AnimateComponent value={dataInfo?dataInfo.applicationCount:null}/></span>
+                                申请信用券次数：<span><AnimateComponent value={dataInfo?dataInfo.applicationCount:null}/></span>
                             </div>
                             <div className="text">
-                                申请兑现金额：<span><AnimateComponent value={dataInfo?dataInfo.discountMoney:null}/><i>￥</i></span>
+                                申请信用券金额：<span><AnimateComponent value={dataInfo?dataInfo.discountMoney:null}/><i>￥</i></span>
                             </div>
                         </div>
                         <span></span>
@@ -175,10 +175,10 @@ class Wfb extends PureComponent{
                     <div className="list">
                         <div className="box">
                             <div className="text">
-                                兑现次数：<span><AnimateComponent value={dataInfo?dataInfo.changeCount:null}/></span>
+                                服务商兑现次数：<span><AnimateComponent value={dataInfo?dataInfo.changeCount:null}/></span>
                             </div>
                             <div className="text">
-                                兑现金额：<span><AnimateComponent value={dataInfo?dataInfo.changeAmount:null}/><i>￥</i></span>
+                                服务商兑现金额：<span><AnimateComponent value={dataInfo?dataInfo.changeAmount:null}/><i>￥</i></span>
                             </div>
                         </div>
                         <span></span>
@@ -278,7 +278,7 @@ class Wfb extends PureComponent{
                         :
                             <div className="content">
                                 <div className="title">企业</div>
-                                <div className="box-list" style={{height:'400px'}}>
+                                <div className="box-list" style={{height:'560px'}}>
                                     <span></span>
                                     <ul>
                                         {declareInfoBox.enterprise.map((item,index)=>{
