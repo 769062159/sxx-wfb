@@ -111,6 +111,7 @@ class Wfb extends PureComponent{
 
     searchMethod=(keyword,list)=>{
         let boxSearchList={company:[],productProvider:[]}
+        let boxSearchList1=[]
         if(list.company && list.productProvider){
             list.company.map((v)=>{
                 if (PinyinMatch.match(v.companyName.toString().toUpperCase(), keyword)) {
@@ -122,8 +123,16 @@ class Wfb extends PureComponent{
                     boxSearchList.productProvider.push(v)
                 }
             })
+            return boxSearchList
         }
-        return boxSearchList
+        if(!list.company){
+            list.map((v)=>{
+                if (PinyinMatch.match(v.corporateName.toString().toUpperCase(), keyword)) {
+                    boxSearchList1.push(v)
+                }
+            })
+            return boxSearchList1
+        }
     }
 
     selectCompany=(e,type)=>{
@@ -134,9 +143,9 @@ class Wfb extends PureComponent{
             this.setState({menuList:listBox})
         }else{
             let listBox=this.searchMethod(keyword,declareList)
-            this.setState({menuList:listBox})
+            this.setState({declareList:listBox})
         }
-        if(keyword===''){this.setState({menuList:menuListBox,declareList:declareInfoBox})}
+        if(keyword===''){this.setState({menuList:menuListBox,declareList:this.props.declareInfo})}
     }
 
     handleSearchList=(type)=>{

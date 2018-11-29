@@ -24,7 +24,6 @@ class InfoList extends PureComponent{
                     items.push(<img key={lodashId()} className='i1' src={starB}></img>);
                 }
             }
-
             for(let j = 0; j < (5-star); j++){
                 items.push(<img key={lodashId()} className='i2' src={starG}></img>);
             }
