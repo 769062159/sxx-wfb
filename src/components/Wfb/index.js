@@ -11,7 +11,7 @@ import zhengshu from '../../assets/images/zhengshu.png'
 import * as Api from "../../api";
 import * as actionTypes from "./store/actionTypes";
 import InfoList from "./infoList";
-
+import lodashId from 'lodash/uniqueId'
 class Wfb extends PureComponent{
     constructor(props){
         super(props)
@@ -173,9 +173,7 @@ class Wfb extends PureComponent{
                     type: actionTypes.GET_DECLARE_INFO,
                     result: res.data.scCompanyInfo
                 })
-                this.setState({idDeclareBox:id,declareDetailInfo:this.props.declareDetailInfo},()=>{
-                    console.log(this.state.declareDetailInfo)
-                })
+                this.setState({idDeclareBox:id,declareDetailInfo:this.props.declareDetailInfo},()=>{})
             }
         }).catch(err=>{
             console.log(err)
@@ -316,9 +314,9 @@ class Wfb extends PureComponent{
                                 <div className="box-list">
                                     <span></span>
                                     <ul>
-                                        {this.state.menuList.company?this.state.menuList.company.map((item,index)=>{
+                                        {this.state.menuList.company?this.state.menuList.company.map((item)=>{
                                             return (
-                                                <li key={index}
+                                                <li key={lodashId()}
                                                     className={item.companyID===this.state.idBox?'active':null}
                                                     onClick={()=>{this.handleSelectId(item)}}>
                                                     <span></span><i className={item.credit>3?'color':null}>{item.credit}星</i>
@@ -334,7 +332,7 @@ class Wfb extends PureComponent{
                                     <ul>
                                         {this.state.menuList.productProvider?this.state.menuList.productProvider.map((item,index)=>{
                                             return (
-                                                <li key={index}>
+                                                <li key={lodashId()}>
                                                     <span></span><i className={item.credit>3?'color':null}>{item.credit}星</i>
                                                     <div className="text">{item.providerName}</div>
                                                 </li>
@@ -349,9 +347,9 @@ class Wfb extends PureComponent{
                                 <div className="box-list" style={{height:'560px'}}>
                                     <span></span>
                                     <ul>
-                                        {declareList.length?declareList.map((item,index)=>{
+                                        {declareList.length?declareList.map((item)=>{
                                             return (
-                                                <li key={index}
+                                                <li key={lodashId()}
                                                     className={item.id===this.state.idDeclareBox?'active':null}
                                                     onClick={()=>{this.handleSelectDeclareId(item)}}
                                                 >

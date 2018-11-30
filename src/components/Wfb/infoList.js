@@ -33,7 +33,6 @@ class InfoList extends PureComponent{
 
     render(){
         const {tradeInfo,declareDetailInfo}=this.props
-        console.log(declareDetailInfo,'*****')
         return (
                 <div className='right-container'>
                     <div className="title">
@@ -64,8 +63,6 @@ class InfoList extends PureComponent{
                             <tr>
                                 <td>星级：
                                     {tradeInfo? this.getStar(tradeInfo.companyCredit,1) :null}
-
-                                {/*<i></i><i></i><i></i><i></i><i></i>*/}
                                 </td>
                                 <td>信用券申领时间：{tradeInfo?moment(tradeInfo.companyCouponCreateTime).format('YYYY-MM-DD'):null}</td>
                                 <td>创新信用券状态：{tradeInfo?tradeInfo.isUse:null}</td>
@@ -79,7 +76,6 @@ class InfoList extends PureComponent{
                             <tr>
                                 <td>星级：
                                     {tradeInfo?this.getStar(tradeInfo.providerCredit,1):null}
-                                {/*<i></i><i></i><i></i><i></i><i></i>*/}
                                 </td>
                                 <td>信用券兑现时间：{tradeInfo?moment(tradeInfo.providerCouponCreateTime).format('YYYY-MM-DD'):null}</td>
                                 <td>创新信用券状态：{tradeInfo?tradeInfo.providerStatus:null}</td>
@@ -105,34 +101,31 @@ class InfoList extends PureComponent{
                             </tr>
                             <tr>
                                 <td>申报单号：{declareDetailInfo?declareDetailInfo.declareNo:null}</td>
-                                <td>申报时间：{declareDetailInfo?declareDetailInfo.declareTime:null}</td>
+                                <td>申报时间：{declareDetailInfo?moment(declareDetailInfo.declareTime).format('YYYY-MM-DD'):null}</td>
                                 <td>政策归属部门：{declareDetailInfo?declareDetailInfo.policyDepartment:null}</td>
                             </tr>
                             <tr><td></td><td></td><td></td></tr>
                             <tr>
                                 <td>企业：{declareDetailInfo?declareDetailInfo.companyName:null}</td>
-                                <td>注册时间：{declareDetailInfo?declareDetailInfo.registerTime:null}</td>
+                                <td>注册时间：{declareDetailInfo?moment(declareDetailInfo.registerTime).format('YYYY-MM-DD'):null}</td>
                                 <td>注册电话：{declareDetailInfo?declareDetailInfo.registerPhone:null}</td>
                             </tr>
                             <tr>
                                 <td>星级：
-                                    {/*{tradeInfo? this.getStar(tradeInfo.companyCredit) :null}*/}
                                     {declareDetailInfo?this.getStar(declareDetailInfo.starLevel,2):null}
-                                    {/*<img src={starB} alt=""/><img src={starB} alt=""/><img src={starB} alt=""/><img src={starB} alt=""/><img src={starB} alt=""/>*/}
-                                    {/*<i></i><i></i><i></i><i></i><i></i>*/}
                                 </td>
-                                <td>信用券申领时间：{declareDetailInfo?declareDetailInfo.creditCardApplyTime:null}</td>
+                                <td>信用券申领时间：{declareDetailInfo?moment(declareDetailInfo.creditCardApplyTime).format('YYYY-MM-DD'):null}</td>
                                 <td>创新信用券状态：{declareDetailInfo?declareDetailInfo.creditCardType:null}</td>
                             </tr>
                             <tr><td></td><td></td><td></td></tr>
                             <tr>
                                 <td>信用券编号：<a href="javascript:;">{declareDetailInfo?declareDetailInfo.creditCardNo:null}</a></td>
-                                <td>信用券发放时间：{declareDetailInfo?declareDetailInfo.creditCardGrantTime:null}</td>
+                                <td>信用券发放时间：{declareDetailInfo?moment(declareDetailInfo.creditCardGrantTime).format('YYYY-MM-DD'):null}</td>
                                 <td>申报审核人：{declareDetailInfo?declareDetailInfo.applyName:null}</td>
                             </tr>
                             <tr>
                                 <td>审核状态：{declareDetailInfo?declareDetailInfo.auditStatus:null}</td>
-                                <td>审核时间：{declareDetailInfo?declareDetailInfo.auditTime:null}</td>
+                                <td>审核时间：{declareDetailInfo?moment(declareDetailInfo.auditTime).format('YYYY-MM-DD'):null}</td>
                                 <td>审核是否通过：{declareDetailInfo?declareDetailInfo.auditPass:null}</td>
                             </tr>
                             </tbody>
