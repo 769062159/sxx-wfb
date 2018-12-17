@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react';
-
+import logo from "../../assets/images/logo.png"
 // import styles from "./tab.less";
 import { browserHistory } from 'react-router';
 import { NavLink } from 'react-router-dom';
@@ -46,7 +46,8 @@ componentDidMount(){
         <Row>
             <Col span={6}>
                 <div className='bar-logo'>
-                  <img alt="" src={require("../../assets/images/logo2.svg")}/>
+                  <img alt="" src={logo}/>
+                    <div className="text">高新技术服务超市智慧政务平台</div>
                 </div>
             </Col>
             <Col span={10}>
@@ -59,7 +60,7 @@ componentDidMount(){
                                 </NavLink>
                             </li>
                         })}
-                        {this.state.path==="datas"?<Interaction/>:<li>互动活动</li>}
+                        {/*{this.state.path==="datas"?<Interaction/>:<li>互动活动</li>}*/}
                     </ul>
                 </div>
             </Col>
@@ -73,10 +74,6 @@ componentDidMount(){
               </span>
             </Col>
         </Row>
-
-
-
-
     </div>
         <div className='bottom'></div>
     </Fragment>

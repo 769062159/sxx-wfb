@@ -203,7 +203,7 @@ class Wfb extends PureComponent{
     }
 
     render(){
-        let { tabStatus, declareList ,dataInfo} = this.state
+        let { tabStatus, declareList, dataInfo} = this.state
         return (
             <div className='wfb-container'>
                 <div className="wfb-top boxShadow">
